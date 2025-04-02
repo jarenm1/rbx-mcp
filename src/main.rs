@@ -26,8 +26,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         let mut place = roblox::parse_roblox_file(filepath)?;
         println!("Successfully parsed place file!");
 
-        println!("{:?}", place);
-
         // Get the API key either from command line arguments or environment variable
         let api_key = matches
             .get_one::<String>("api-key")
@@ -55,7 +53,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         let json: Modification = serde_json::from_str(&text).unwrap();
         let root_ref = place.root().referent();
         json_to_weakdom(&mut place, &json, root_ref)?;
-        println!("updated: {:#?}", place);
         write_roblox_file("output.rbxlx", &place)?;
     }
 
