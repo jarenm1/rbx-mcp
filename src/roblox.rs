@@ -128,9 +128,11 @@ pub fn json_to_weakdom(dom: &mut WeakDom, json: &Modification, parent_id: Ref) -
 /// Find a service by name or create it if it doesn't exist
 fn find_or_create_service(dom: &mut WeakDom, parent_id: Ref, service_name: &str) -> Result<Ref, Box<dyn Error>> {
     // Try to find the service among the parent's children
-    let parent = dom.get_by_ref(parent_id).unwrap();
+    let parent = dom.get_by_ref(parent_id)
+        .ok_or_else(|| format!("Invalid parent reference: {:?}", parent_id))?;
     for &child_id in parent.children() {
-        let instance = dom.get_by_ref(child_id).unwrap();
+        let instance = dom.get_by_ref(child_id)
+            .ok_or_else(|| format!("Invalid child reference: {:?}", child_id))?;
         if instance.name == service_name {
             println!("Found existing service: {}", service_name);
             return Ok(child_id);
@@ -251,50 +253,105 @@ pub fn add_instance_to_weakdom(
             "Vector3" => {
                 if let Value::Array(vec) = &prop.value {
                     if vec.len() == 3 {
-                        Variant::Vector3(Vector3::new(
-                            vec[0].as_f64().unwrap_or(0.0) as f32,
-                            vec[1].as_f64().unwrap_or(0.0) as f32,
-                            vec[2].as_f64().unwrap_or(0.0) as f32,
-                        ))
+                        let x = vec[0].as_f64().unwrap_or(0.0) as f32;
+                        let y = vec[1].as_f64().unwrap_or(0.0) as f32;
+                        let z = vec[2].as_f64().unwrap_or(0.0) as f32;
+                        
+                        println!("    - Vector3: [{}, {}, {}]", x, y, z);
+                        Variant::Vector3(Vector3::new(x, y, z))
                     } else {
                         return Err("Vector3 must have 3 components".into());
                     }
+                } else if let Value::Object(obj) = &prop.value {
+                    // Handle Vector3 as an object with x, y, z properties
+                    let x = obj.get("x").and_then(|v| v.as_f64()).unwrap_or(0.0) as f32;
+                    let y = obj.get("y").and_then(|v| v.as_f64()).unwrap_or(0.0) as f32;
+                    let z = obj.get("z").and_then(|v| v.as_f64()).unwrap_or(0.0) as f32;
+                    
+                    println!("    - Vector3 (object): [{}, {}, {}]", x, y, z);
+                    Variant::Vector3(Vector3::new(x, y, z))
                 } else {
-                    return Err("Vector3 must be an array".into());
+                    return Err("Vector3 must be an array or object".into());
                 }
             }
             "CFrame" => {
+                // Create verbose debug output to diagnose the issue
+                println!("    - Raw CFrame value: {:?}", prop.value);
+                
                 if let Value::Object(obj) = &prop.value {
-                    let pos = obj.get("position").and_then(|v| v.as_array()).ok_or("CFrame missing position")?;
-                    let rot = obj.get("rotation").and_then(|v| v.as_array()).ok_or("CFrame missing rotation")?;
-                    if pos.len() == 3 && rot.len() == 9 {
-                        // Matrix3 expects three Vector3 values for x, y, and z axes
-                        Variant::CFrame(CFrame::new(
-                            Vector3::new(
-                                pos[0].as_f64().unwrap_or(0.0) as f32,
-                                pos[1].as_f64().unwrap_or(0.0) as f32,
-                                pos[2].as_f64().unwrap_or(0.0) as f32,
-                            ),
-                            Matrix3::new(
-                                Vector3::new(
-                                    rot[0].as_f64().unwrap_or(0.0) as f32,
-                                    rot[1].as_f64().unwrap_or(0.0) as f32,
-                                    rot[2].as_f64().unwrap_or(0.0) as f32,
-                                ),
-                                Vector3::new(
-                                    rot[3].as_f64().unwrap_or(0.0) as f32,
-                                    rot[4].as_f64().unwrap_or(0.0) as f32,
-                                    rot[5].as_f64().unwrap_or(0.0) as f32,
-                                ),
-                                Vector3::new(
-                                    rot[6].as_f64().unwrap_or(0.0) as f32,
-                                    rot[7].as_f64().unwrap_or(0.0) as f32,
-                                    rot[8].as_f64().unwrap_or(0.0) as f32,
-                                ),
-                            ),
-                        ))
+                    // Try to extract position
+                    if let Some(pos_val) = obj.get("position") {
+                        println!("    - Position value: {:?}", pos_val);
+                        
+                        let pos = if let Some(pos_arr) = pos_val.as_array() {
+                            if pos_arr.len() == 3 {
+                                let x = pos_arr[0].as_f64().unwrap_or(0.0) as f32;
+                                let y = pos_arr[1].as_f64().unwrap_or(0.0) as f32;
+                                let z = pos_arr[2].as_f64().unwrap_or(0.0) as f32;
+                                Vector3::new(x, y, z)
+                            } else {
+                                return Err("CFrame position must have 3 components".into());
+                            }
+                        } else if let Some(pos_obj) = pos_val.as_object() {
+                            // Handle position as an object with x, y, z properties
+                            let x = pos_obj.get("x").and_then(|v| v.as_f64()).unwrap_or(0.0) as f32;
+                            let y = pos_obj.get("y").and_then(|v| v.as_f64()).unwrap_or(0.0) as f32;
+                            let z = pos_obj.get("z").and_then(|v| v.as_f64()).unwrap_or(0.0) as f32;
+                            Vector3::new(x, y, z)
+                        } else {
+                            return Err("CFrame position must be an array or object".into());
+                        };
+
+                        // Log the position to verify
+                        println!("    - CFrame position: [{}, {}, {}]", pos.x, pos.y, pos.z);
+
+                        // Extract rotation (optional)
+                        let rot = if let Some(rot_val) = obj.get("rotation") {
+                            println!("    - Rotation value: {:?}", rot_val);
+                            
+                            if let Some(rot_arr) = rot_val.as_array() {
+                                if rot_arr.len() == 9 {
+                                    // Convert all 9 values to f32
+                                    let values: Vec<f32> = rot_arr.iter()
+                                        .map(|v| v.as_f64().unwrap_or(0.0) as f32)
+                                        .collect();
+                                    
+                                    println!("    - Using rotation matrix: {:?}", values);
+                                    
+                                    Matrix3::new(
+                                        Vector3::new(values[0], values[1], values[2]),
+                                        Vector3::new(values[3], values[4], values[5]),
+                                        Vector3::new(values[6], values[7], values[8])
+                                    )
+                                } else if rot_arr.len() == 3 {
+                                    // Handle rotation as just angles
+                                    println!("    - Using rotation angles");
+                                    // For simplicity, using identity matrix when only angles provided
+                                    Matrix3::identity()
+                                } else {
+                                    // Default to identity matrix if rotation not provided correctly
+                                    println!("    - Using identity matrix for rotation (incorrect length)");
+                                    Matrix3::identity()
+                                }
+                            } else {
+                                // Default to identity matrix
+                                println!("    - Using identity matrix for rotation (not an array)");
+                                Matrix3::identity()
+                            }
+                        } else {
+                            // If rotation is missing, use identity matrix
+                            println!("    - Using identity matrix for rotation (missing)");
+                            Matrix3::identity()
+                        };
+
+                        // Create the CFrame with position and rotation
+                        let cframe = CFrame::new(pos, rot);
+                        println!("    - Final CFrame position: [{}, {}, {}]", 
+                            cframe.position.x, cframe.position.y, cframe.position.z);
+                        
+                        Variant::CFrame(cframe)
                     } else {
-                        return Err("CFrame position must have 3 components, rotation 9".into());
+                        return Err("CFrame missing position".into());
                     }
                 } else {
                     return Err("CFrame must be an object with position and rotation".into());

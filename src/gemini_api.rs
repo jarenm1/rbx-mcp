@@ -196,6 +196,8 @@ fn documentation_prompt() -> String {
     "class": "Part",
     "name": "Door",
     "target_parent": "Workspace/House",
+
+    Set the run context for scripts with the correct enum.
     
     BE VERY IN DEPTH WITH WHAT IS ADDED. ADD MORE DETAIL.
     ADD MORE INSTANCES TO ADD MORE DETAIL.

@@ -24,15 +24,6 @@ pub fn build_cli() -> Command {
                 .required(false),
         )
         .arg(
-            Arg::new("prompt")
-                .short('p')
-                .long("prompt")
-                .value_name("PROMPT")
-                .help("Custom prompt to send to Gemini along with the place data")
-                .default_value("Analyze this Roblox place structure")
-                .required(false),
-        )
-        .arg(
             Arg::new("context")
                 .short('c')
                 .long("context")

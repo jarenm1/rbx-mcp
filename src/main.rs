@@ -1,14 +1,14 @@
 use std::env;
 use std::error::Error;
+use std::io::{self, BufRead, Write};
 use std::path::PathBuf;
+use std::sync::{Arc, Mutex};
 use dotenv::dotenv;
+use std::time::SystemTime;
 
-// Import our modules
-use roblox_mcp::{
-    cli,
-    gemini_api::GeminiClient,
-    roblox::{self, json_to_weakdom, Modification, write_roblox_file},
-};
+use roblox_mcp::cli::build_cli;
+use roblox_mcp::gemini_api::GeminiClient;
+use roblox_mcp::roblox::{self, write_roblox_file, Modification};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -16,66 +16,181 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dotenv().ok();
 
     // Set up CLI
-    let matches = cli::build_cli().get_matches();
+    let matches = build_cli().get_matches();
 
     // Get the filepath from the command-line arguments
-    if let Some(filepath) = matches.get_one::<PathBuf>("filepath") {
-        println!("Input filepath: {}", filepath.display());
+    let filepath = matches.get_one::<PathBuf>("filepath")
+        .ok_or("Filepath must be provided")?;
+    println!("Input filepath: {}", filepath.display());
 
-        // Parse the XML file into a Roblox place
-        let mut place = roblox::parse_roblox_file(filepath)?;
-        println!("Successfully parsed place file!");
+    // Initial parse to verify the file is valid
+    let _ = roblox::parse_roblox_file(filepath)?;
+    println!("Successfully parsed place file!");
 
-        // Get the API key either from command line arguments or environment variable
-        let api_key = matches
-            .get_one::<String>("api-key")
-            .map(|s| s.to_string())
-            .or_else(|| env::var("GEMINI_API_KEY").ok())
-            .ok_or("Gemini API key not provided. Use --api-key option or set GEMINI_API_KEY environment variable")?;
+    // Get the API key either from command line arguments or environment variable
+    let api_key = matches
+        .get_one::<String>("api-key")
+        .map(|s| s.to_string())
+        .or_else(|| env::var("GEMINI_API_KEY").ok())
+        .ok_or("Gemini API key not provided. Use --api-key option or set GEMINI_API_KEY environment variable")?;
 
-        // Get the user prompt
-        let prompt = matches
-            .get_one::<String>("prompt")
-            .map(|s| s.to_string())
-            .unwrap_or_else(|| "Analyze this Roblox place structure".to_string());
-
-        println!("Using prompt: {}", prompt);
-
-        // Get the context file if provided
-        let context = matches
-            .get_one::<PathBuf>("context")
-            .and_then(|path| {
-                if path.extension().map_or(false, |ext| ext == "md") {
-                    match std::fs::read_to_string(path) {
-                        Ok(content) => {
-                            println!("Loaded context from: {}", path.display());
-                            Some(content)
-                        },
-                        Err(e) => {
-                            eprintln!("Error reading context file: {}", e);
-                            None
-                        }
+    // Get the context file if provided
+    let context = matches
+        .get_one::<PathBuf>("context")
+        .and_then(|path| {
+            if path.extension().map_or(false, |ext| ext == "md") {
+                match std::fs::read_to_string(path) {
+                    Ok(content) => {
+                        println!("Loaded context from: {}", path.display());
+                        Some(content)
+                    },
+                    Err(e) => {
+                        eprintln!("Error reading context file: {}", e);
+                        None
                     }
-                } else {
-                    eprintln!("Context file must be a markdown (.md) file");
-                    None
                 }
-            });
+            } else {
+                eprintln!("Context file must have .md extension");
+                None
+            }
+        });
 
-        // Create Gemini client and generate content
-        let client = GeminiClient::flash(api_key);
-        let response = client.generate_content(&prompt, &place, 8000, 0.8, context).await?;
-
-        // Process the response
-        let text = GeminiClient::extract_text(&response).unwrap();
-        println!("Gemini API Response:");
-        println!("{}", text);
-
-        let json: Modification = serde_json::from_str(&text).unwrap();
-        let root_ref = place.root().referent();
-        json_to_weakdom(&mut place, &json, root_ref)?;
-        write_roblox_file("output.rbxlx", &place)?;
+    // Create Gemini client
+    let client = GeminiClient::flash(api_key);
+    
+    // Track the latest output file - use the original filepath
+    let latest_output = Arc::new(Mutex::new(filepath.to_string_lossy().to_string()));
+    let last_modified = Arc::new(Mutex::new(SystemTime::now()));
+    
+    // Start HTTP server for Roblox Studio plugin communication
+    let server_output = latest_output.clone();
+    let server_modified = last_modified.clone();
+    tokio::spawn(async move {
+        start_http_server(server_output, server_modified).await;
+    });
+    
+    println!("\n===== ROBLOX MCP INTERACTIVE MODE =====");
+    println!("Enter prompts to modify your Roblox place. Press Ctrl+C to exit.");
+    println!("Roblox Studio plugin can connect to http://localhost:3030");
+    
+    loop {
+        // Re-parse the place at the start of each loop to get fresh data
+        let mut place = match roblox::parse_roblox_file(filepath) {
+            Ok(place) => place,
+            Err(e) => {
+                eprintln!("Error parsing place file: {}", e);
+                continue;
+            }
+        };
+        
+        // Ask for a prompt at each iteration
+        let mut current_prompt = String::new();
+        print!("\nEnter your prompt: ");
+        io::stdout().flush()?;
+        io::stdin().lock().read_line(&mut current_prompt)?;
+        current_prompt = current_prompt.trim().to_string();
+        
+        // Check for exit command
+        if current_prompt.to_lowercase() == "exit" || current_prompt.to_lowercase() == "quit" {
+            println!("Exiting MCP interactive mode");
+            break;
+        }
+        
+        // Skip empty prompts
+        if current_prompt.is_empty() {
+            println!("Prompt is empty, please try again");
+            continue;
+        }
+        
+        println!("Processing prompt: {}", current_prompt);
+        
+        // Generate content with Gemini
+        match client.generate_content(&current_prompt, &place, 8000, 0.8, context.clone()).await {
+            Ok(response) => {
+                // Extract and process the response
+                let text_option = GeminiClient::extract_text(&response);
+                match text_option {
+                    Some(text) => {
+                        println!("Gemini API Response:");
+                        println!("{}", text);
+                        
+                        // Try to parse the response as JSON directly
+                        match serde_json::from_str::<Modification>(&text) {
+                            Ok(modification) => {
+                                // Modify the place with the parsed data
+                                let root_ref = place.root_ref();
+                                if let Err(e) = roblox::json_to_weakdom(&mut place, &modification, root_ref) {
+                                    eprintln!("Error modifying place: {}", e);
+                                    continue;
+                                }
+                                
+                                // Save by overwriting the original input file
+                                if let Err(e) = write_roblox_file(&filepath, &place) {
+                                    eprintln!("Error writing to input file: {}", e);
+                                    continue;
+                                }
+                                
+                                // Update the modified time for HTTP server
+                                *last_modified.lock().unwrap() = SystemTime::now();
+                                println!("Updated original file: {}", filepath.display());
+                            },
+                            Err(e) => {
+                                eprintln!("Error parsing JSON: {}", e);
+                                eprintln!("Raw response: {}", text);
+                            }
+                        }
+                    },
+                    None => {
+                        eprintln!("No text found in Gemini response");
+                    }
+                }
+            },
+            Err(e) => {
+                eprintln!("Error generating content: {}", e);
+                continue;
+            }
+        }
     }
 
     Ok(())
+}
+
+async fn start_http_server(
+    output_file: Arc<Mutex<String>>, 
+    last_modified: Arc<Mutex<SystemTime>>
+) {
+    // Import warp at the function level to avoid affecting main compilation
+    use warp::Filter;
+    
+    // Create a route for getting the last modified time
+    let modified_time = Arc::clone(&last_modified);
+    let last_modified_route = warp::path!("last_modified")
+        .map(move || {
+            let time = *modified_time.lock().unwrap();
+            match time.duration_since(std::time::UNIX_EPOCH) {
+                Ok(duration) => format!("{}", duration.as_secs()),
+                Err(_) => "0".to_string()
+            }
+        });
+    
+    // Create a route for getting the file content
+    let file_path = Arc::clone(&output_file);
+    let file_content_route = warp::path!("file_content")
+        .map(move || {
+            let path = file_path.lock().unwrap().clone();
+            match std::fs::read_to_string(&path) {
+                Ok(content) => content,
+                Err(e) => format!("Error reading file: {}", e)
+            }
+        });
+    
+    // Combined routes
+    let routes = last_modified_route.or(file_content_route);
+    
+    println!("Starting HTTP server on http://localhost:3030");
+    println!("Roblox plugin can use these endpoints:");
+    println!("  - GET /last_modified - Returns the timestamp of the last file update");
+    println!("  - GET /file_content - Returns the full RBXLX content");
+    
+    warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 }
