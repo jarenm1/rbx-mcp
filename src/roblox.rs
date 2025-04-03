@@ -20,6 +20,8 @@ pub struct JsonInstance {
     pub properties: HashMap<String, JsonProperty>,
     #[serde(default)]
     pub children: Vec<JsonInstance>,
+    #[serde(default)]
+    pub target_parent: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -43,18 +45,165 @@ pub fn parse_roblox_str(xml: &str) -> Result<WeakDom, Box<dyn Error>> {
 }
 
 /// Add instances from JSON to the Roblox place
-/// parent_id should be the Workspace reference for proper structure
+/// parent_id should be the DataModel reference for proper structure
 pub fn json_to_weakdom(dom: &mut WeakDom, json: &Modification, parent_id: Ref) -> Result<(), Box<dyn Error>> {
-    println!("Adding instances to Workspace...");
+    println!("Adding instances to Roblox place...");
+    
+    // Maps service names to their refs
+    let mut service_refs: HashMap<String, Ref> = HashMap::new();
+    
+    // Get the DataModel root
+    let data_model_id = parent_id;
+    
+    // Find or create Workspace
+    let workspace_id = find_or_create_service(dom, data_model_id, "Workspace")?;
+    service_refs.insert("Workspace".to_string(), workspace_id);
+    
+    // Define common Roblox services
+    let common_services = [
+        "StarterPlayer", "Lighting", "ReplicatedStorage", "ServerScriptService", 
+        "ServerStorage", "SoundService", "Chat", "Teams"
+    ];
+    
+    // Find or create common services
+    for service_name in common_services.iter() {
+        let service_id = find_or_create_service(dom, data_model_id, service_name)?;
+        service_refs.insert(service_name.to_string(), service_id);
+    }
+    
+    // Special case: Find or create StarterPlayerScripts under StarterPlayer
+    // First, get the ref without keeping a borrow on service_refs
+    let starter_player_id_opt = service_refs.get("StarterPlayer").copied();
+    
+    if let Some(starter_player_id) = starter_player_id_opt {
+        let starter_player_scripts_id = find_or_create_service(dom, starter_player_id, "StarterPlayerScripts")?;
+        service_refs.insert("StarterPlayerScripts".to_string(), starter_player_scripts_id);
+        
+        let starter_character_scripts_id = find_or_create_service(dom, starter_player_id, "StarterCharacterScripts")?;
+        service_refs.insert("StarterCharacterScripts".to_string(), starter_character_scripts_id);
+    }
     
     // Process all top-level instances
     for instance in &json.add {
-        // Create each top-level instance and all its children recursively
-        process_instance_with_children(dom, instance, parent_id)?;
+        // Debug output to see what's being received
+        println!("Instance: {}, target_parent: {:?}", instance.name, instance.target_parent);
+        
+        // Determine the parent based on target_parent, defaulting to Workspace
+        let target_parent = match &instance.target_parent {
+            Some(target) => {
+                println!("  - Target parent specified: {}", target);
+                
+                // First, check if it's a direct service reference
+                if service_refs.contains_key(target) {
+                    println!("  - Found matching service for '{}'", target);
+                    *service_refs.get(target).unwrap()
+                } else {
+                    // If not a service, try to find it by path
+                    match find_instance_by_path(dom, data_model_id, target) {
+                        Some(id) => {
+                            println!("  - Found instance at path '{}'", target);
+                            id
+                        }
+                        None => {
+                            println!("  - Could not find target '{}', defaulting to Workspace", target);
+                            workspace_id
+                        }
+                    }
+                }
+            }
+            None => {
+                println!("  - No target_parent specified, defaulting to Workspace");
+                workspace_id
+            }
+        };
+        
+        // Create each instance and all its children recursively
+        process_instance_with_children(dom, instance, target_parent)?;
     }
     
     println!("Successfully added all instances!");
     Ok(())
+}
+
+/// Find a service by name or create it if it doesn't exist
+fn find_or_create_service(dom: &mut WeakDom, parent_id: Ref, service_name: &str) -> Result<Ref, Box<dyn Error>> {
+    // Try to find the service among the parent's children
+    let parent = dom.get_by_ref(parent_id).unwrap();
+    for &child_id in parent.children() {
+        let instance = dom.get_by_ref(child_id).unwrap();
+        if instance.name == service_name {
+            println!("Found existing service: {}", service_name);
+            return Ok(child_id);
+        }
+    }
+    
+    // If not found, create the service
+    println!("Creating service: {}", service_name);
+    let service_id = dom.insert(parent_id, InstanceBuilder::new(service_name).with_name(service_name));
+    
+    Ok(service_id)
+}
+
+/// Find instance by path (e.g., "Workspace/Models/House")
+fn find_instance_by_path(dom: &WeakDom, start_id: Ref, path: &str) -> Option<Ref> {
+    let path_parts: Vec<&str> = path.split('/').collect();
+    
+    // If path is empty, return the starting point
+    if path_parts.is_empty() || (path_parts.len() == 1 && path_parts[0].is_empty()) {
+        return Some(start_id);
+    }
+    
+    // Start with the first part of the path
+    let mut current_id = if path_parts[0] == "DataModel" {
+        // If path starts with DataModel, skip it and use start_id (which should be DataModel)
+        if path_parts.len() == 1 {
+            return Some(start_id);
+        }
+        start_id
+    } else {
+        // Otherwise, find the first part as a direct child of start_id
+        let service_name = path_parts[0];
+        
+        // Check if it's a service
+        match find_service(dom, start_id, service_name) {
+            Some(id) => id,
+            None => return None,
+        }
+    };
+    
+    // Traverse the rest of the path
+    for &part in &path_parts[if path_parts[0] == "DataModel" { 2 } else { 1 }..] {
+        let parent = dom.get_by_ref(current_id).unwrap();
+        
+        let mut found = false;
+        for &child_id in parent.children() {
+            let child = dom.get_by_ref(child_id).unwrap();
+            if child.name == part {
+                current_id = child_id;
+                found = true;
+                break;
+            }
+        }
+        
+        if !found {
+            println!("Could not find '{}' in path '{}'", part, path);
+            return None;
+        }
+    }
+    
+    Some(current_id)
+}
+
+/// Find a service by name or None if it doesn't exist
+fn find_service(dom: &WeakDom, parent_id: Ref, service_name: &str) -> Option<Ref> {
+    let parent = dom.get_by_ref(parent_id).unwrap();
+    for &child_id in parent.children() {
+        let instance = dom.get_by_ref(child_id).unwrap();
+        if instance.name == service_name {
+            return Some(child_id);
+        }
+    }
+    None
 }
 
 /// Process an instance and all its children recursively
@@ -83,8 +232,20 @@ pub fn add_instance_to_weakdom(
     println!("Creating instance: {} ({})", json.name, json.class);
     let mut builder = InstanceBuilder::new(&json.class).with_name(&json.name);
 
+    let is_script = json.class == "Script" || 
+                    json.class == "LocalScript" || 
+                    json.class == "ModuleScript";
+
     // Add properties to the instance builder
     for (prop_name, prop) in &json.properties {
+        // Special case for Script Source property
+        if is_script && prop_name == "Source" {
+            if let Some(source) = prop.value.as_str() {
+                builder = builder.with_property("Source", Variant::String(source.to_string()));
+                continue;
+            }
+        }
+
         println!("  - Adding property: {}", prop_name);
         let variant = match prop.type_name.as_str() {
             "Vector3" => {
@@ -143,7 +304,8 @@ pub fn add_instance_to_weakdom(
                 if let Value::String(s) = &prop.value {
                     Variant::String(s.clone())
                 } else {
-                    return Err("String must be a string value".into());
+                    // Also try to convert numbers or other types to string
+                    Variant::String(prop.value.to_string())
                 }
             }
             "BrickColor" => {

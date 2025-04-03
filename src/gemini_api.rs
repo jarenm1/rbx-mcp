@@ -123,6 +123,7 @@ fn example_prompt() -> String {
             {
                 "class": "Part",
                 "name": "Base",
+                "target_parent": "Workspace/House",
                 "properties": {
                     "CFrame": {
                         "type": "CFrame",
@@ -169,10 +170,44 @@ fn example_prompt() -> String {
 
 fn documentation_prompt() -> String {
     r#"
+    
+    You can target nested instances using path syntax with forward slashes:
+    - Basic services: "Workspace", "ServerScriptService", etc.
+    - Nested paths: "Workspace/Map", "Workspace/Models/House", "ReplicatedStorage/Assets/Weapons"
+    - Instance names in the path MUST MATCH EXACTLY with existing instances
 
+    YOU MUST START WITH THE HIGHEST LEVEL. i.e. "Workspace" or "ReplicatedStorage" AND INDEX TO TARGET. THIS IS REQUIRED!
+    DO NOT SKIP THIS STEP.
+    YOU MUST INDEX TO TARGET BASED ON THE PROVIDED DOM CONTEXT.
+    
+    Valid target_parent examples:
+    - "Workspace" - Top-level workspace (for physical objects, parts, models)
+    - "ServerScriptService" - For server-side scripts
+    - "Workspace/Environment" - Inside a potential folder named "Environment" in Workspace
+    - "ReplicatedStorage/Weapons/Swords" - Deep nesting is supported
+    - "StarterPlayer" - For StarterPlayer
+    - "StarterPlayer/StarterPlayerScripts" - For scripts in StarterPlayerScripts
+    - "StarterPlayer/StarterCharacter" - For scripts StarterCharacter
+    - "StarterGui" - For GUI
+    - "StarterPack" - For character items.
+
+    
+    Example of correctly specifying a parent:
+    "class": "Part",
+    "name": "Door",
+    "target_parent": "Workspace/House",
+    
     BE VERY IN DEPTH WITH WHAT IS ADDED. ADD MORE DETAIL.
     ADD MORE INSTANCES TO ADD MORE DETAIL.
     DOING MANY NESTED CHILDREN IS ALSO OK, AND MAY BE NEEDED IN SOME CASES.
+
+    IF YOU ARE ASKED TO MODIFY SOMETHING, SET THE CORRECT target_parent BASED ON REQUEST.
+    EXAMPLE: If asked to add a door to an existing house model, you MUST use:
+    "target_parent": "Workspace/House"
+
+    IF YOU ARE ASKED TO MODIFY SOMETHING, SET CORRECT target_parent BASED ON REQUEST.
+    EXAMPLE: modify script in StarterPlayerScripts. YOU WILL SET StarterPlayerScripts AS THE target_parent.
+    Use target_parent for setting the parent of outer-most instances in your json response. 
     
     You will add a Item element. This item element will have a class, this class is the type of Instance of the item.
     https://create.roblox.com/docs/reference/engine/classes/Instance 
