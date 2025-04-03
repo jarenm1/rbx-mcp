@@ -36,22 +36,32 @@ impl GeminiClient {
         place: &impl std::fmt::Debug,
         max_tokens: u32,
         temperature: f32,
+        context: Option<String>,
     ) -> Result<Value, Box<dyn Error>> {
         // Create a request payload for Gemini
+        let mut request_parts = vec![
+            json!({
+                "text": format!("RESPOND ONLY WITH RAW JSON, NO MARKDOWN CODE BLOCKS, NO BACKTICKS. DO NOT INCLUDE ```json AT THE BEGINNING OR ``` AT THE END. Your response must be a pure JSON document that can be directly parsed by a JSON parser. {}: {:?}", prompt, place)
+            }),
+            json!({
+                "text": format!("IMPORTANT: DO NOT wrap your response in code blocks or any other formatting. ONLY RETURN JSON in this exact format: {}", example_prompt())
+            }),
+            json!({
+                "text": format!("RESPOND ONLY WITH ADDED INSTANCES. DO NOT PROVIDE ANYTHING ELSE. {}", documentation_prompt())
+            })
+        ];
+
+        // Add context if provided
+        if let Some(ctx) = context {
+            request_parts.push(json!({
+                "text": format!("Additional context for your consideration: {}", ctx)
+            }));
+        }
+
         let request_body = json!({
             "contents": [
                 {
-                    "parts": [
-                        {
-                            "text": format!("RESPOND ONLY WITH RAW JSON, NO MARKDOWN CODE BLOCKS, NO BACKTICKS. DO NOT INCLUDE ```json AT THE BEGINNING OR ``` AT THE END. Your response must be a pure JSON document that can be directly parsed by a JSON parser. {}: {:?}", prompt, place)
-                        },
-                        {
-                            "text": format!("IMPORTANT: DO NOT wrap your response in code blocks or any other formatting. ONLY RETURN JSON in this exact format: {}", example_prompt())
-                        },
-                        {
-                            "text": format!("RESPOND ONLY WITH ADDED INSTANCES. DO NOT PROVIDE ANYTHING ELSE. {}", documentation_prompt())
-                        }
-                    ]
+                    "parts": request_parts
                 }
             ],
             "generationConfig": {

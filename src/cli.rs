@@ -32,4 +32,12 @@ pub fn build_cli() -> Command {
                 .default_value("Analyze this Roblox place structure")
                 .required(false),
         )
+        .arg(
+            Arg::new("context")
+                .short('c')
+                .long("context")
+                .value_name("FILE")
+                .help("Context file path (markdown .md)")
+                .required(false),
+        )
 }

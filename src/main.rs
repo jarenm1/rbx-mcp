@@ -41,9 +41,30 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
         println!("Using prompt: {}", prompt);
 
+        // Get the context file if provided
+        let context = matches
+            .get_one::<PathBuf>("context")
+            .and_then(|path| {
+                if path.extension().map_or(false, |ext| ext == "md") {
+                    match std::fs::read_to_string(path) {
+                        Ok(content) => {
+                            println!("Loaded context from: {}", path.display());
+                            Some(content)
+                        },
+                        Err(e) => {
+                            eprintln!("Error reading context file: {}", e);
+                            None
+                        }
+                    }
+                } else {
+                    eprintln!("Context file must be a markdown (.md) file");
+                    None
+                }
+            });
+
         // Create Gemini client and generate content
         let client = GeminiClient::flash(api_key);
-        let response = client.generate_content(&prompt, &place, 5000, 0.7).await?;
+        let response = client.generate_content(&prompt, &place, 5000, 0.7, context).await?;
 
         // Process the response
         let text = GeminiClient::extract_text(&response).unwrap();

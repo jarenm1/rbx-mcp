@@ -1990,6 +1990,26 @@ updateHealthBar()</string>
       </Properties>
     </Item>
   </Item>
+  <Item class="ScreenGui" referent="80">
+    <Properties>
+      <string name="Name">HealthGUI</string>
+    </Properties>
+    <Item class="Frame" referent="81">
+      <Properties>
+        <string name="Name">HealthBarFrame</string>
+      </Properties>
+      <Item class="Frame" referent="82">
+        <Properties>
+          <string name="Name">HealthBar</string>
+        </Properties>
+      </Item>
+    </Item>
+    <Item class="LocalScript" referent="83">
+      <Properties>
+        <string name="Name">HealthScript</string>
+      </Properties>
+    </Item>
+  </Item>
   <SharedStrings>
     <SharedString md5="rxNJufX5oaagQE3qNtzJSQ=="></SharedString>
   </SharedStrings>
