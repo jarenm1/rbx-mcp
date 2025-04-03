@@ -122,7 +122,7 @@ fn example_prompt() -> String {
         "add": [
             {
                 "class": "Part",
-                "name": "HouseBase",
+                "name": "Base",
                 "properties": {
                     "CFrame": {
                         "type": "CFrame",
@@ -143,7 +143,7 @@ fn example_prompt() -> String {
                 "children": [
                     {
                         "class": "Decal",
-                        "name": "Window",
+                        "name": "Painting",
                         "properties": {
                             "Texture": {
                                 "type": "String",
@@ -165,5 +165,8 @@ fn documentation_prompt() -> String {
     https://create.roblox.com/docs/reference/engine/classes/Instance 
     Each class has its own properties and can also have properties infered from other classes.
     Please correctly add the correct properties for each added item.
+
+    Things like doors, windows, and other objects that should be open, should be NegationOperations instead of parts.
+    Collect groups of parts together as models.
     "#.to_string()
 }

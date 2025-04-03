@@ -29,3 +29,8 @@ cargo run -- --file ./path/to/your/file.rbxlx --api-key <YOUR_API_KEY> --prompt 
 
 ```
 
+## Example Prompt
+Make me a large brick house that is 20 units tall, the walls should be red and made of brick material. Make a door that a player can walk through. Include a sloped roof that is colored black. This will require dozens of parts. Sloped roof will required orientation and correct positioning. Include pillars on the corners to improve looks of the house. Include a proper door
+
+### Output
+(insert image)

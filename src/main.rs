@@ -64,7 +64,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
         // Create Gemini client and generate content
         let client = GeminiClient::flash(api_key);
-        let response = client.generate_content(&prompt, &place, 5000, 0.7, context).await?;
+        let response = client.generate_content(&prompt, &place, 8000, 0.8, context).await?;
 
         // Process the response
         let text = GeminiClient::extract_text(&response).unwrap();
