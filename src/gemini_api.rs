@@ -138,6 +138,14 @@ fn example_prompt() -> String {
                     "BrickColor": {
                         "type": "BrickColor",
                         "value": 194
+                    },
+                    "Material": {
+                        "type": "Enum",
+                        "value": 1
+                    },
+                    "Color": {
+                        "type": "Color3",
+                        "value": [1.0, 1.0, 1.0]
                     }
                 },
                 "children": [
@@ -161,12 +169,82 @@ fn example_prompt() -> String {
 
 fn documentation_prompt() -> String {
     r#"
+
+    BE VERY IN DEPTH WITH WHAT IS ADDED. ADD MORE DETAIL.
+    ADD MORE INSTANCES TO ADD MORE DETAIL.
+    DOING MANY NESTED CHILDREN IS ALSO OK, AND MAY BE NEEDED IN SOME CASES.
+    
     You will add a Item element. This item element will have a class, this class is the type of Instance of the item.
     https://create.roblox.com/docs/reference/engine/classes/Instance 
     Each class has its own properties and can also have properties infered from other classes.
     Please correctly add the correct properties for each added item.
 
+    PROVIDE UDIM2 AS AN ARRAY OF 4 VALUES, [xScale, xOffset, yScale, yOffset].
+
+    EVERY INSTANCE MUST HAVE A NAME.
+
+    NAME IS NOT A PROPERTY
+
+    Font enum must be between 0 and 45.
+
+    Do not assign a Primary Part to a Model.
+    
+    BrickColor must be a number and not 0.
+
     Things like doors, windows, and other objects that should be open, should be NegationOperations instead of parts.
     Collect groups of parts together as models.
+
+    Material is an Enum type.
+    The default Plastic material has a very light texture, and the SmoothPlastic material has no texture at all.
+    Some material textures like DiamondPlate and Granite have very visible textures. 
+    Each material's texture reflects sunlight differently, especially Foil. 
+    The Glass material changes rendering behavior on moderate graphics settings. 
+    It applies a bit of reflectiveness.
+
+    Name: Plastic Value:256
+    Name: SmoothPlastic Value:272
+    Name: Neon Value:288
+    Name: Wood Value:512
+    Name: WoodPlanks Value:528
+    Name: Marble Value:784
+    Name: Basalt Value:788
+    Name: Slate Value:800
+    Name: CrackedLava Value:804
+    Name: Concrete Value:816
+    Name: Limestone Value:820
+    Name: Granite Value:832
+    Name: Pavement Value:836
+    Name: Brick Value:848
+    Name: Pebble Value:864
+    Name: Cobblestone Value:880
+    Name: Rock Value:896
+    Name: Sandstone Value:912
+    Name: CorrodedMetal Value:1040
+    Name: DiamondPlate Value:1056
+    Name: Foil Value:1072
+    Name: Metal Value:1088
+    Name: Grass Value:1280
+    Name: LeafyGrass Value:1284
+    Name: Sand Value:1296
+    Name: Fabric Value:1312
+    Name: Snow Value:1328
+    Name: Mud Value:1344
+    Name: Ground Value:1360
+    Name: Asphalt Value:1376
+    Name: Salt Value:1392
+    Name: Ice Value:1536
+    Name: Glacier Value:1552
+    Name: Glass Value:1568
+    Name: ForceField Value:1584
+    Name: Air Value:1792
+    Name: Water Value:2048
+    Name: Cardboard Value:2304
+    Name: Carpet Value:2305
+    Name: CeramicTiles Value:2306
+    Name: ClayRoofTiles Value:2307
+    Name: RoofShingles Value:2308
+    Name: Leather Value:2309
+    Name: Plaster Value:2310
+    Name: Rubber Value:2311
     "#.to_string()
 }

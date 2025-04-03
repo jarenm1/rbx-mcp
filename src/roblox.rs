@@ -1,4 +1,4 @@
-use rbx_dom_weak::types::{BrickColor, CFrame, Matrix3, Ref, Variant, Vector3};
+use rbx_dom_weak::types::{BrickColor, CFrame, Color3, Enum, Matrix3, Ref, UDim, UDim2, Variant, Vector3};
 use rbx_dom_weak::{InstanceBuilder, WeakDom};
 use serde_json::Value;
 use serde::{Serialize, Deserialize};
@@ -149,7 +149,7 @@ pub fn add_instance_to_weakdom(
             "BrickColor" => {
                 if let Value::Number(n) = &prop.value {
                     // Convert to u16 as required by from_number
-                    let number = n.as_u64().unwrap_or(0) as u16;
+                    let number = n.as_u64().unwrap_or(1) as u16;
                     match BrickColor::from_number(number) {
                         Some(color) => Variant::BrickColor(color),
                         None => return Err(format!("Invalid BrickColor number: {}", number).into())
@@ -177,6 +177,49 @@ pub fn add_instance_to_weakdom(
                     Variant::Int32(n.as_i64().unwrap_or(0) as i32)
                 } else {
                     return Err("Int must be a numeric value".into());
+                }
+            }
+            "Enum" => {
+                if let Value::Number(n) = &prop.value {
+                    Variant::Enum(Enum::from_u32(n.as_u64().unwrap_or(1).try_into().unwrap()))
+                } else {
+                    return Err("Enum must be a numeric value".into());
+                }
+            }
+            "Color3" => {
+                if let Value::Array(vec) = &prop.value {
+                    if vec.len() == 3 {
+                        Variant::Color3(Color3::new(
+                            vec[0].as_f64().unwrap_or(0.0) as f32,
+                            vec[1].as_f64().unwrap_or(0.0) as f32,
+                            vec[2].as_f64().unwrap_or(0.0) as f32,
+                        ))
+                    } else {
+                        return Err("Color3 must have 3 components".into());
+                    }
+                } else {
+                    return Err("Color3 must be an array".into());
+                }
+            }
+            "UDim2" => {
+                if let Value::Array(vec) = &prop.value {
+                    if vec.len() == 4 {
+                        // UDim2::new requires two UDim values (x and y)
+                        // Each UDim has a scale (float) and offset (integer)
+                        let x = UDim::new(
+                            vec[0].as_f64().unwrap_or(0.0) as f32,
+                            vec[1].as_i64().unwrap_or(0) as i32
+                        );
+                        let y = UDim::new(
+                            vec[2].as_f64().unwrap_or(0.0) as f32,
+                            vec[3].as_i64().unwrap_or(0) as i32
+                        );
+                        Variant::UDim2(UDim2::new(x, y))
+                    } else {
+                        return Err("UDim2 must have 4 components [xScale, xOffset, yScale, yOffset]".into());
+                    }
+                } else {
+                    return Err("UDim2 must be an array".into());
                 }
             }
             // Add more types as needed
