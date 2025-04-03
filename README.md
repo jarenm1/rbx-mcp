@@ -3,9 +3,8 @@ MCP for roblox studio.
 Gemini support only, kinda hardcoded 2.0 flash model.
 
 # Usage
-```
-clone and cargo run -- --file <FILE> --api-key <KEY> --prompt <PROMPT> --context <FILE>
-```
+Clone and use cargo run.
+
 Context is optional. 
 Api key can be provided as argument or via env variable.
 
@@ -33,4 +32,4 @@ cargo run -- --file ./path/to/your/file.rbxlx --api-key <YOUR_API_KEY> --prompt 
 Make me a large brick house that is 20 units tall, the walls should be red and made of brick material. Make a door that a player can walk through. Include a sloped roof that is colored black. This will require dozens of parts. Sloped roof will required orientation and correct positioning. Include pillars on the corners to improve looks of the house. Include a proper door
 
 ### Output
-(insert image)
+![image](https://github.com/user-attachments/assets/0d2f9a80-9194-4cfa-bfb0-dd1957e7072d)
