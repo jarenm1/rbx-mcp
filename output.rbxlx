@@ -96,18 +96,18 @@
         <string name="Name">Camera</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
         <CoordinateFrame name="CFrame">
-          <X>-19.696095</X>
-          <Y>14.091624</Y>
-          <Z>-19.303886</Z>
-          <R00>-0.7061509</R00>
-          <R01>0.31296578</R01>
-          <R02>-0.6351404</R02>
-          <R10>0.000000014901163</R10>
-          <R11>0.8970132</R11>
-          <R12>0.44200373</R12>
-          <R20>0.7080614</R20>
-          <R21>0.31212133</R21>
-          <R22>-0.63342667</R22>
+          <X>-10.3074465</X>
+          <Y>42.976444</Y>
+          <Z>-76.410736</Z>
+          <R00>-0.94040495</R00>
+          <R01>0.11926264</R01>
+          <R02>-0.31845728</R02>
+          <R10>-0.0000000074505815</R10>
+          <R11>0.93648267</R11>
+          <R12>0.3507139</R12>
+          <R20>0.3400568</R20>
+          <R21>0.3298131</R21>
+          <R22>-0.8806729</R22>
         </CoordinateFrame>
         <Ref name="CameraSubject">null</Ref>
         <token name="CameraType">0</token>
@@ -115,9 +115,9 @@
         <float name="FieldOfView">70</float>
         <token name="FieldOfViewMode">0</token>
         <CoordinateFrame name="Focus">
-          <X>-18.425814</X>
-          <Y>13.207617</Y>
-          <Z>-18.037033</Z>
+          <X>-9.670532</X>
+          <Y>42.275017</Y>
+          <Z>-74.64939</Z>
           <R00>1</R00>
           <R01>0</R01>
           <R02>0</R02>
@@ -511,8 +511,152 @@
         </Properties>
       </Item>
     </Item>
+    <Item class="Part" referent="7">
+      <Properties>
+        <string name="Name">TallRedTower</string>
+        <bool name="Anchored">false</bool>
+        <BinaryString name="AttributesSerialize"></BinaryString>
+        <bool name="AudioCanCollide">true</bool>
+        <float name="BackParamA">-0.5</float>
+        <float name="BackParamB">0.5</float>
+        <token name="BackSurface">0</token>
+        <token name="BackSurfaceInput">0</token>
+        <float name="BottomParamA">-0.5</float>
+        <float name="BottomParamB">0.5</float>
+        <token name="BottomSurface">4</token>
+        <token name="BottomSurfaceInput">0</token>
+        <CoordinateFrame name="CFrame">
+          <X>2.039978</X>
+          <Y>25</Y>
+          <Z>18.930023</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <bool name="CanCollide">true</bool>
+        <bool name="CanQuery">true</bool>
+        <bool name="CanTouch">true</bool>
+        <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+        <bool name="CastShadow">true</bool>
+        <string name="CollisionGroup">Default</string>
+        <int name="CollisionGroupId">0</int>
+        <Color3uint8 name="Color3uint8">16711680</Color3uint8>
+        <PhysicalProperties name="CustomPhysicalProperties">
+          <CustomPhysics>false</CustomPhysics>
+        </PhysicalProperties>
+        <bool name="EnableFluidForces">true</bool>
+        <token name="formFactorRaw">1</token>
+        <float name="FrontParamA">-0.5</float>
+        <float name="FrontParamB">0.5</float>
+        <token name="FrontSurface">0</token>
+        <token name="FrontSurfaceInput">0</token>
+        <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+        <float name="LeftParamA">-0.5</float>
+        <float name="LeftParamB">0.5</float>
+        <token name="LeftSurface">0</token>
+        <token name="LeftSurfaceInput">0</token>
+        <bool name="Locked">false</bool>
+        <bool name="Massless">false</bool>
+        <token name="Material">256</token>
+        <string name="MaterialVariantSerialized"></string>
+        <CoordinateFrame name="PivotOffset">
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <float name="Reflectance">0</float>
+        <float name="RightParamA">-0.5</float>
+        <float name="RightParamB">0.5</float>
+        <token name="RightSurface">0</token>
+        <token name="RightSurfaceInput">0</token>
+        <int name="RootPriority">0</int>
+        <Vector3 name="RotVelocity">
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+        </Vector3>
+        <bool name="DefinesCapabilities">false</bool>
+        <token name="shape">1</token>
+        <Vector3 name="size">
+          <X>5</X>
+          <Y>50</Y>
+          <Z>5</Z>
+        </Vector3>
+        <int64 name="SourceAssetId">-1</int64>
+        <BinaryString name="Tags"></BinaryString>
+        <float name="TopParamA">-0.5</float>
+        <float name="TopParamB">0.5</float>
+        <token name="TopSurface">3</token>
+        <token name="TopSurfaceInput">0</token>
+        <float name="Transparency">0</float>
+        <UniqueId name="UniqueId">6709df032944e90107ff60400000038e</UniqueId>
+        <Vector3 name="Velocity">
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+        </Vector3>
+      </Properties>
+      <Item class="Weld" referent="8">
+        <Properties>
+          <string name="Name">Weld</string>
+          <BinaryString name="AttributesSerialize"></BinaryString>
+          <CoordinateFrame name="C0">
+            <X>0</X>
+            <Y>-25</Y>
+            <Z>0</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>0</R11>
+            <R12>-1</R12>
+            <R20>0</R20>
+            <R21>1</R21>
+            <R22>0</R22>
+          </CoordinateFrame>
+          <CoordinateFrame name="C1">
+            <X>2.039978</X>
+            <Y>7.999998</Y>
+            <Z>18.930023</Z>
+            <R00>1</R00>
+            <R01>0</R01>
+            <R02>0</R02>
+            <R10>0</R10>
+            <R11>0</R11>
+            <R12>-1</R12>
+            <R20>0</R20>
+            <R21>1</R21>
+            <R22>0</R22>
+          </CoordinateFrame>
+          <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+          <bool name="Enabled">true</bool>
+          <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+          <Ref name="Part0">7</Ref>
+          <Ref name="Part1">2</Ref>
+          <bool name="DefinesCapabilities">false</bool>
+          <int64 name="SourceAssetId">-1</int64>
+          <BinaryString name="Tags"></BinaryString>
+          <UniqueId name="UniqueId">6709df032944e90107ff604000005f24</UniqueId>
+        </Properties>
+      </Item>
+    </Item>
   </Item>
-  <Item class="TimerService" referent="7">
+  <Item class="TimerService" referent="9">
     <Properties>
       <string name="Name">Instance</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -524,7 +668,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000313</UniqueId>
     </Properties>
   </Item>
-  <Item class="SoundService" referent="8">
+  <Item class="SoundService" referent="10">
     <Properties>
       <string name="Name">SoundService</string>
       <token name="AmbientReverb">0</token>
@@ -546,7 +690,7 @@
       <token name="VolumetricAudio">1</token>
     </Properties>
   </Item>
-  <Item class="VideoCaptureService" referent="9">
+  <Item class="VideoCaptureService" referent="11">
     <Properties>
       <string name="Name">VideoCaptureService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -558,7 +702,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000320</UniqueId>
     </Properties>
   </Item>
-  <Item class="NonReplicatedCSGDictionaryService" referent="10">
+  <Item class="NonReplicatedCSGDictionaryService" referent="12">
     <Properties>
       <string name="Name">NonReplicatedCSGDictionaryService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -570,7 +714,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000321</UniqueId>
     </Properties>
   </Item>
-  <Item class="CSGDictionaryService" referent="11">
+  <Item class="CSGDictionaryService" referent="13">
     <Properties>
       <string name="Name">CSGDictionaryService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -582,7 +726,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000322</UniqueId>
     </Properties>
   </Item>
-  <Item class="Chat" referent="12">
+  <Item class="Chat" referent="14">
     <Properties>
       <string name="Name">Chat</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -597,7 +741,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000327</UniqueId>
     </Properties>
   </Item>
-  <Item class="Players" referent="13">
+  <Item class="Players" referent="15">
     <Properties>
       <string name="Name">Players</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -615,7 +759,7 @@
       <bool name="UseStrafingAnimations">false</bool>
     </Properties>
   </Item>
-  <Item class="ReplicatedFirst" referent="14">
+  <Item class="ReplicatedFirst" referent="16">
     <Properties>
       <string name="Name">ReplicatedFirst</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -627,7 +771,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000032c</UniqueId>
     </Properties>
   </Item>
-  <Item class="TweenService" referent="15">
+  <Item class="TweenService" referent="17">
     <Properties>
       <string name="Name">TweenService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -639,7 +783,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000032e</UniqueId>
     </Properties>
   </Item>
-  <Item class="MaterialService" referent="16">
+  <Item class="MaterialService" referent="18">
     <Properties>
       <string name="Name">MaterialService</string>
       <string name="AsphaltName">Asphalt</string>
@@ -692,7 +836,7 @@
       <string name="WoodPlanksName">WoodPlanks</string>
     </Properties>
   </Item>
-  <Item class="TextChatService" referent="17">
+  <Item class="TextChatService" referent="19">
     <Properties>
       <string name="Name">TextChatService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -709,7 +853,7 @@
       <BinaryString name="Tags"></BinaryString>
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000330</UniqueId>
     </Properties>
-    <Item class="ChatWindowConfiguration" referent="18">
+    <Item class="ChatWindowConfiguration" referent="20">
       <Properties>
         <string name="Name">ChatWindowConfiguration</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -754,7 +898,7 @@
         <float name="WidthScale">1</float>
       </Properties>
     </Item>
-    <Item class="ChatInputBarConfiguration" referent="19">
+    <Item class="ChatInputBarConfiguration" referent="21">
       <Properties>
         <string name="Name">ChatInputBarConfiguration</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -803,7 +947,7 @@
         <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000398</UniqueId>
       </Properties>
     </Item>
-    <Item class="BubbleChatConfiguration" referent="20">
+    <Item class="BubbleChatConfiguration" referent="22">
       <Properties>
         <string name="Name">BubbleChatConfiguration</string>
         <string name="AdorneeName">HumanoidRootPart</string>
@@ -851,7 +995,7 @@
         <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000399</UniqueId>
         <float name="VerticalStudsOffset">0</float>
       </Properties>
-      <Item class="UIGradient" referent="21">
+      <Item class="UIGradient" referent="23">
         <Properties>
           <string name="Name">UIGradient</string>
           <BinaryString name="AttributesSerialize"></BinaryString>
@@ -871,7 +1015,7 @@
           <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000039a</UniqueId>
         </Properties>
       </Item>
-      <Item class="ImageLabel" referent="22">
+      <Item class="ImageLabel" referent="24">
         <Properties>
           <string name="Name">ImageLabel</string>
           <bool name="Active">false</bool>
@@ -973,7 +1117,7 @@
           <int name="ZIndex">1</int>
         </Properties>
       </Item>
-      <Item class="UICorner" referent="23">
+      <Item class="UICorner" referent="25">
         <Properties>
           <string name="Name">UICorner</string>
           <BinaryString name="AttributesSerialize"></BinaryString>
@@ -989,7 +1133,7 @@
           <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000039c</UniqueId>
         </Properties>
       </Item>
-      <Item class="UIPadding" referent="24">
+      <Item class="UIPadding" referent="26">
         <Properties>
           <string name="Name">UIPadding</string>
           <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1018,7 +1162,7 @@
         </Properties>
       </Item>
     </Item>
-    <Item class="ChannelTabsConfiguration" referent="25">
+    <Item class="ChannelTabsConfiguration" referent="27">
       <Properties>
         <string name="Name">ChannelTabsConfiguration</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1070,7 +1214,7 @@
       </Properties>
     </Item>
   </Item>
-  <Item class="PermissionsService" referent="26">
+  <Item class="PermissionsService" referent="28">
     <Properties>
       <string name="Name">PermissionsService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1082,7 +1226,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000332</UniqueId>
     </Properties>
   </Item>
-  <Item class="PlayerEmulatorService" referent="27">
+  <Item class="PlayerEmulatorService" referent="29">
     <Properties>
       <string name="Name">PlayerEmulatorService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1102,7 +1246,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000333</UniqueId>
     </Properties>
   </Item>
-  <Item class="StudioData" referent="28">
+  <Item class="StudioData" referent="30">
     <Properties>
       <string name="Name">StudioData</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1115,7 +1259,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000337</UniqueId>
     </Properties>
   </Item>
-  <Item class="StarterPlayer" referent="29">
+  <Item class="StarterPlayer" referent="31">
     <Properties>
       <string name="Name">StarterPlayer</string>
       <bool name="AllowCustomAnimations">true</bool>
@@ -1167,7 +1311,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000339</UniqueId>
       <bool name="UserEmotesEnabled">true</bool>
     </Properties>
-    <Item class="StarterPlayerScripts" referent="30">
+    <Item class="StarterPlayerScripts" referent="32">
       <Properties>
         <string name="Name">StarterPlayerScripts</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1179,7 +1323,7 @@
         <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000038f</UniqueId>
       </Properties>
     </Item>
-    <Item class="StarterCharacterScripts" referent="31">
+    <Item class="StarterCharacterScripts" referent="33">
       <Properties>
         <string name="Name">StarterCharacterScripts</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1192,7 +1336,7 @@
       </Properties>
     </Item>
   </Item>
-  <Item class="StarterPack" referent="32">
+  <Item class="StarterPack" referent="34">
     <Properties>
       <string name="Name">StarterPack</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1204,7 +1348,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000033a</UniqueId>
     </Properties>
   </Item>
-  <Item class="StarterGui" referent="33">
+  <Item class="StarterGui" referent="35">
     <Properties>
       <string name="Name">StarterGui</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1223,7 +1367,7 @@
       <token name="VirtualCursorMode">0</token>
     </Properties>
   </Item>
-  <Item class="LocalizationService" referent="34">
+  <Item class="LocalizationService" referent="36">
     <Properties>
       <string name="Name">LocalizationService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1235,7 +1379,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000033d</UniqueId>
     </Properties>
   </Item>
-  <Item class="TeleportService" referent="35">
+  <Item class="TeleportService" referent="37">
     <Properties>
       <string name="Name">Teleport Service</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1247,7 +1391,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000342</UniqueId>
     </Properties>
   </Item>
-  <Item class="CollectionService" referent="36">
+  <Item class="CollectionService" referent="38">
     <Properties>
       <string name="Name">CollectionService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1259,7 +1403,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000344</UniqueId>
     </Properties>
   </Item>
-  <Item class="PhysicsService" referent="37">
+  <Item class="PhysicsService" referent="39">
     <Properties>
       <string name="Name">PhysicsService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1271,7 +1415,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000345</UniqueId>
     </Properties>
   </Item>
-  <Item class="InsertService" referent="38">
+  <Item class="InsertService" referent="40">
     <Properties>
       <string name="Name">InsertService</string>
       <bool name="AllowClientInsertModels">false</bool>
@@ -1284,7 +1428,7 @@
       <BinaryString name="Tags"></BinaryString>
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000349</UniqueId>
     </Properties>
-    <Item class="StringValue" referent="39">
+    <Item class="StringValue" referent="41">
       <Properties>
         <string name="Name">InsertionHash</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1298,7 +1442,7 @@
       </Properties>
     </Item>
   </Item>
-  <Item class="GamePassService" referent="40">
+  <Item class="GamePassService" referent="42">
     <Properties>
       <string name="Name">GamePassService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1310,7 +1454,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000034a</UniqueId>
     </Properties>
   </Item>
-  <Item class="Debris" referent="41">
+  <Item class="Debris" referent="43">
     <Properties>
       <string name="Name">Debris</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1323,7 +1467,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000034b</UniqueId>
     </Properties>
   </Item>
-  <Item class="CookiesService" referent="42">
+  <Item class="CookiesService" referent="44">
     <Properties>
       <string name="Name">CookiesService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1335,7 +1479,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000034c</UniqueId>
     </Properties>
   </Item>
-  <Item class="Selection" referent="43">
+  <Item class="Selection" referent="45">
     <Properties>
       <string name="Name">Selection</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1347,7 +1491,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000034d</UniqueId>
     </Properties>
   </Item>
-  <Item class="VRService" referent="44">
+  <Item class="VRService" referent="46">
     <Properties>
       <string name="Name">VRService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1364,7 +1508,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000351</UniqueId>
     </Properties>
   </Item>
-  <Item class="ContextActionService" referent="45">
+  <Item class="ContextActionService" referent="47">
     <Properties>
       <string name="Name">ContextActionService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1376,7 +1520,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000352</UniqueId>
     </Properties>
   </Item>
-  <Item class="ScriptService" referent="46">
+  <Item class="ScriptService" referent="48">
     <Properties>
       <string name="Name">Instance</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1388,7 +1532,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000353</UniqueId>
     </Properties>
   </Item>
-  <Item class="AssetService" referent="47">
+  <Item class="AssetService" referent="49">
     <Properties>
       <string name="Name">AssetService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1400,7 +1544,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000354</UniqueId>
     </Properties>
   </Item>
-  <Item class="TouchInputService" referent="48">
+  <Item class="TouchInputService" referent="50">
     <Properties>
       <string name="Name">TouchInputService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1412,68 +1556,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000355</UniqueId>
     </Properties>
   </Item>
-  <Item class="LuaWebService" referent="49">
-    <Properties>
-      <string name="Name">LuaWebService</string>
-      <BinaryString name="AttributesSerialize"></BinaryString>
-      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
-      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
-      <bool name="DefinesCapabilities">false</bool>
-      <int64 name="SourceAssetId">-1</int64>
-      <BinaryString name="Tags"></BinaryString>
-      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000361</UniqueId>
-    </Properties>
-  </Item>
-  <Item class="ProcessInstancePhysicsService" referent="50">
-    <Properties>
-      <string name="Name">ProcessInstancePhysicsService</string>
-      <BinaryString name="AttributesSerialize"></BinaryString>
-      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
-      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
-      <bool name="DefinesCapabilities">false</bool>
-      <int64 name="SourceAssetId">-1</int64>
-      <BinaryString name="Tags"></BinaryString>
-      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000362</UniqueId>
-    </Properties>
-  </Item>
-  <Item class="ReplicatedStorage" referent="51">
-    <Properties>
-      <string name="Name">ReplicatedStorage</string>
-      <BinaryString name="AttributesSerialize"></BinaryString>
-      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
-      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
-      <bool name="DefinesCapabilities">false</bool>
-      <int64 name="SourceAssetId">-1</int64>
-      <BinaryString name="Tags"></BinaryString>
-      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000363</UniqueId>
-    </Properties>
-  </Item>
-  <Item class="ServerScriptService" referent="52">
-    <Properties>
-      <string name="Name">ServerScriptService</string>
-      <BinaryString name="AttributesSerialize"></BinaryString>
-      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
-      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
-      <bool name="LoadStringEnabled">false</bool>
-      <bool name="DefinesCapabilities">false</bool>
-      <int64 name="SourceAssetId">-1</int64>
-      <BinaryString name="Tags"></BinaryString>
-      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000364</UniqueId>
-    </Properties>
-  </Item>
-  <Item class="ServerStorage" referent="53">
-    <Properties>
-      <string name="Name">ServerStorage</string>
-      <BinaryString name="AttributesSerialize"></BinaryString>
-      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
-      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
-      <bool name="DefinesCapabilities">false</bool>
-      <int64 name="SourceAssetId">-1</int64>
-      <BinaryString name="Tags"></BinaryString>
-      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000365</UniqueId>
-    </Properties>
-  </Item>
-  <Item class="ServiceVisibilityService" referent="54">
+  <Item class="ServiceVisibilityService" referent="51">
     <Properties>
       <string name="Name">ServiceVisibilityService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1487,7 +1570,68 @@
       <BinaryString name="VisibleServices"><![CDATA[AAAAAA==]]></BinaryString>
     </Properties>
   </Item>
-  <Item class="HttpService" referent="55">
+  <Item class="LuaWebService" referent="52">
+    <Properties>
+      <string name="Name">LuaWebService</string>
+      <BinaryString name="AttributesSerialize"></BinaryString>
+      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+      <bool name="DefinesCapabilities">false</bool>
+      <int64 name="SourceAssetId">-1</int64>
+      <BinaryString name="Tags"></BinaryString>
+      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000361</UniqueId>
+    </Properties>
+  </Item>
+  <Item class="ProcessInstancePhysicsService" referent="53">
+    <Properties>
+      <string name="Name">ProcessInstancePhysicsService</string>
+      <BinaryString name="AttributesSerialize"></BinaryString>
+      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+      <bool name="DefinesCapabilities">false</bool>
+      <int64 name="SourceAssetId">-1</int64>
+      <BinaryString name="Tags"></BinaryString>
+      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000362</UniqueId>
+    </Properties>
+  </Item>
+  <Item class="ReplicatedStorage" referent="54">
+    <Properties>
+      <string name="Name">ReplicatedStorage</string>
+      <BinaryString name="AttributesSerialize"></BinaryString>
+      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+      <bool name="DefinesCapabilities">false</bool>
+      <int64 name="SourceAssetId">-1</int64>
+      <BinaryString name="Tags"></BinaryString>
+      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000363</UniqueId>
+    </Properties>
+  </Item>
+  <Item class="ServerScriptService" referent="55">
+    <Properties>
+      <string name="Name">ServerScriptService</string>
+      <BinaryString name="AttributesSerialize"></BinaryString>
+      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+      <bool name="LoadStringEnabled">false</bool>
+      <bool name="DefinesCapabilities">false</bool>
+      <int64 name="SourceAssetId">-1</int64>
+      <BinaryString name="Tags"></BinaryString>
+      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000364</UniqueId>
+    </Properties>
+  </Item>
+  <Item class="ServerStorage" referent="56">
+    <Properties>
+      <string name="Name">ServerStorage</string>
+      <BinaryString name="AttributesSerialize"></BinaryString>
+      <SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+      <UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+      <bool name="DefinesCapabilities">false</bool>
+      <int64 name="SourceAssetId">-1</int64>
+      <BinaryString name="Tags"></BinaryString>
+      <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000365</UniqueId>
+    </Properties>
+  </Item>
+  <Item class="HttpService" referent="57">
     <Properties>
       <string name="Name">HttpService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1500,7 +1644,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff41000000037d</UniqueId>
     </Properties>
   </Item>
-  <Item class="DataStoreService" referent="56">
+  <Item class="DataStoreService" referent="58">
     <Properties>
       <string name="Name">DataStoreService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1514,7 +1658,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000380</UniqueId>
     </Properties>
   </Item>
-  <Item class="Lighting" referent="57">
+  <Item class="Lighting" referent="59">
     <Properties>
       <string name="Name">Lighting</string>
       <Color3 name="Ambient">
@@ -1564,7 +1708,7 @@
       <string name="TimeOfDay">14:30:00</string>
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000381</UniqueId>
     </Properties>
-    <Item class="Sky" referent="58">
+    <Item class="Sky" referent="60">
       <Properties>
         <string name="Name">Sky</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1604,7 +1748,7 @@
         <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000392</UniqueId>
       </Properties>
     </Item>
-    <Item class="SunRaysEffect" referent="59">
+    <Item class="SunRaysEffect" referent="61">
       <Properties>
         <string name="Name">SunRays</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1619,7 +1763,7 @@
         <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000393</UniqueId>
       </Properties>
     </Item>
-    <Item class="Atmosphere" referent="60">
+    <Item class="Atmosphere" referent="62">
       <Properties>
         <string name="Name">Atmosphere</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1645,7 +1789,7 @@
         <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000394</UniqueId>
       </Properties>
     </Item>
-    <Item class="BloomEffect" referent="61">
+    <Item class="BloomEffect" referent="63">
       <Properties>
         <string name="Name">Bloom</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1661,7 +1805,7 @@
         <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000395</UniqueId>
       </Properties>
     </Item>
-    <Item class="DepthOfFieldEffect" referent="62">
+    <Item class="DepthOfFieldEffect" referent="64">
       <Properties>
         <string name="Name">DepthOfField</string>
         <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1679,7 +1823,7 @@
       </Properties>
     </Item>
   </Item>
-  <Item class="LodDataService" referent="63">
+  <Item class="LodDataService" referent="65">
     <Properties>
       <string name="Name">Instance</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1691,7 +1835,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000382</UniqueId>
     </Properties>
   </Item>
-  <Item class="ProximityPromptService" referent="64">
+  <Item class="ProximityPromptService" referent="66">
     <Properties>
       <string name="Name">ProximityPromptService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1705,7 +1849,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000383</UniqueId>
     </Properties>
   </Item>
-  <Item class="Teams" referent="65">
+  <Item class="Teams" referent="67">
     <Properties>
       <string name="Name">Teams</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1717,7 +1861,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000384</UniqueId>
     </Properties>
   </Item>
-  <Item class="TestService" referent="66">
+  <Item class="TestService" referent="68">
     <Properties>
       <string name="Name">TestService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1738,7 +1882,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000385</UniqueId>
     </Properties>
   </Item>
-  <Item class="UGCAvatarService" referent="67">
+  <Item class="UGCAvatarService" referent="69">
     <Properties>
       <string name="Name">UGCAvatarService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1750,7 +1894,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000386</UniqueId>
     </Properties>
   </Item>
-  <Item class="VirtualInputManager" referent="68">
+  <Item class="VirtualInputManager" referent="70">
     <Properties>
       <string name="Name">VirtualInputManager</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1762,7 +1906,7 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff410000000387</UniqueId>
     </Properties>
   </Item>
-  <Item class="VideoService" referent="69">
+  <Item class="VideoService" referent="71">
     <Properties>
       <string name="Name">VideoService</string>
       <BinaryString name="AttributesSerialize"></BinaryString>
@@ -1774,254 +1918,77 @@
       <UniqueId name="UniqueId">2d980c9caa121b3207ff4100000003ac</UniqueId>
     </Properties>
   </Item>
-  <Item class="Model" referent="70">
+  <Item class="LocalScript" referent="72">
     <Properties>
-      <string name="Name">House</string>
+      <string name="Name">PlayerSpawnDetector</string>
     </Properties>
-    <Item class="Part" referent="71">
+  </Item>
+  <Item class="ScreenGui" referent="73">
+    <Properties>
+      <string name="Name">HealthGui</string>
+      <int name="DisplayOrder">0</int>
+      <bool name="Enabled">true</bool>
+      <bool name="ResetOnSpawn">true</bool>
+      <token name="ScreenInsets">1</token>
+    </Properties>
+    <Item class="Frame" referent="74">
       <Properties>
-        <string name="Name">Wall1</string>
-        <Vector3 name="size">
-          <X>10</X>
-          <Y>10</Y>
-          <Z>1</Z>
-        </Vector3>
+        <string name="Name">HealthBarFrame</string>
+        <float name="BackgroundTransparency">0.5</float>
+        <int name="BorderSizePixel">2</int>
+        <bool name="Visible">true</bool>
+        <int name="ZIndex">1</int>
       </Properties>
     </Item>
-    <Item class="Part" referent="72">
+    <Item class="LocalScript" referent="75">
       <Properties>
-        <string name="Name">Wall2</string>
-        <Vector3 name="size">
-          <X>10</X>
-          <Y>10</Y>
-          <Z>1</Z>
-        </Vector3>
-      </Properties>
-    </Item>
-    <Item class="Part" referent="73">
-      <Properties>
-        <string name="Name">Wall3</string>
-        <Vector3 name="size">
-          <X>1</X>
-          <Y>10</Y>
-          <Z>10</Z>
-        </Vector3>
-      </Properties>
-    </Item>
-    <Item class="Part" referent="74">
-      <Properties>
-        <string name="Name">Wall4</string>
-        <Vector3 name="size">
-          <X>1</X>
-          <Y>10</Y>
-          <Z>10</Z>
-        </Vector3>
-      </Properties>
-    </Item>
-    <Item class="Part" referent="75">
-      <Properties>
-        <string name="Name">Roof</string>
-        <Vector3 name="size">
-          <X>10</X>
-          <Y>1</Y>
-          <Z>10</Z>
-        </Vector3>
-      </Properties>
-    </Item>
-    <Item class="Part" referent="76">
-      <Properties>
-        <string name="Name">Floor</string>
-        <Vector3 name="size">
-          <X>10</X>
-          <Y>1</Y>
-          <Z>10</Z>
-        </Vector3>
+        <string name="Name">HealthScript</string>
+        <bool name="Disabled">false</bool>
       </Properties>
     </Item>
   </Item>
-  <Item class="Model" referent="77">
+  <Item class="ScreenGui" referent="76">
     <Properties>
-      <string name="Name">House</string>
+      <string name="Name">HealthGUI</string>
+      <int name="DisplayOrder">0</int>
+      <bool name="Enabled">true</bool>
+      <bool name="ResetOnSpawn">true</bool>
     </Properties>
-    <Item class="Part" referent="78">
+    <Item class="Frame" referent="77">
       <Properties>
-        <string name="Name">Wall1</string>
-        <CoordinateFrame name="CFrame">
-          <X>0</X>
-          <Y>5</Y>
-          <Z>5</Z>
-          <R00>1</R00>
-          <R01>0</R01>
-          <R02>0</R02>
-          <R10>0</R10>
-          <R11>1</R11>
-          <R12>0</R12>
-          <R20>0</R20>
-          <R21>0</R21>
-          <R22>1</R22>
-        </CoordinateFrame>
-        <Vector3 name="size">
-          <X>10</X>
-          <Y>10</Y>
-          <Z>1</Z>
-        </Vector3>
+        <string name="Name">HealthBarFrame</string>
+        <float name="BackgroundTransparency">0.5</float>
+        <int name="BorderSizePixel">2</int>
+      </Properties>
+      <Item class="Frame" referent="78">
+        <Properties>
+          <string name="Name">HealthBar</string>
+          <int name="BorderSizePixel">0</int>
+        </Properties>
+      </Item>
+    </Item>
+    <Item class="LocalScript" referent="79">
+      <Properties>
+        <string name="Name">HealthScript</string>
+        <bool name="Disabled">false</bool>
+        <string name="Source">-- Health Script
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local healthBarFrame = script.Parent:WaitForChild("HealthBarFrame")
+local healthBar = healthBarFrame:WaitForChild("HealthBar")
+
+local function updateHealthBar()
+ local healthRatio = humanoid.Health / humanoid.MaxHealth
+ healthBar.Size = UDim2.new(healthRatio, 0, 1, 0)
+end
+
+humanoid.HealthChanged:Connect(updateHealthBar)
+
+updateHealthBar()</string>
       </Properties>
     </Item>
-    <Item class="Part" referent="79">
-      <Properties>
-        <string name="Name">Wall2</string>
-        <CoordinateFrame name="CFrame">
-          <X>0</X>
-          <Y>5</Y>
-          <Z>-5</Z>
-          <R00>1</R00>
-          <R01>0</R01>
-          <R02>0</R02>
-          <R10>0</R10>
-          <R11>1</R11>
-          <R12>0</R12>
-          <R20>0</R20>
-          <R21>0</R21>
-          <R22>1</R22>
-        </CoordinateFrame>
-        <Vector3 name="size">
-          <X>10</X>
-          <Y>10</Y>
-          <Z>1</Z>
-        </Vector3>
-      </Properties>
-    </Item>
-    <Item class="Part" referent="80">
-      <Properties>
-        <string name="Name">Wall3</string>
-        <CoordinateFrame name="CFrame">
-          <X>5</X>
-          <Y>5</Y>
-          <Z>0</Z>
-          <R00>1</R00>
-          <R01>0</R01>
-          <R02>0</R02>
-          <R10>0</R10>
-          <R11>1</R11>
-          <R12>0</R12>
-          <R20>0</R20>
-          <R21>0</R21>
-          <R22>1</R22>
-        </CoordinateFrame>
-        <Vector3 name="size">
-          <X>1</X>
-          <Y>10</Y>
-          <Z>10</Z>
-        </Vector3>
-      </Properties>
-    </Item>
-    <Item class="Part" referent="81">
-      <Properties>
-        <string name="Name">Wall4</string>
-        <CoordinateFrame name="CFrame">
-          <X>-5</X>
-          <Y>5</Y>
-          <Z>0</Z>
-          <R00>1</R00>
-          <R01>0</R01>
-          <R02>0</R02>
-          <R10>0</R10>
-          <R11>1</R11>
-          <R12>0</R12>
-          <R20>0</R20>
-          <R21>0</R21>
-          <R22>1</R22>
-        </CoordinateFrame>
-        <Vector3 name="size">
-          <X>1</X>
-          <Y>10</Y>
-          <Z>10</Z>
-        </Vector3>
-      </Properties>
-    </Item>
-    <Item class="Part" referent="82">
-      <Properties>
-        <string name="Name">Roof</string>
-        <CoordinateFrame name="CFrame">
-          <X>0</X>
-          <Y>10</Y>
-          <Z>0</Z>
-          <R00>1</R00>
-          <R01>0</R01>
-          <R02>0</R02>
-          <R10>0</R10>
-          <R11>1</R11>
-          <R12>0</R12>
-          <R20>0</R20>
-          <R21>0</R21>
-          <R22>1</R22>
-        </CoordinateFrame>
-        <Vector3 name="size">
-          <X>10</X>
-          <Y>1</Y>
-          <Z>10</Z>
-        </Vector3>
-      </Properties>
-    </Item>
-    <Item class="Part" referent="83">
-      <Properties>
-        <string name="Name">Floor</string>
-        <CoordinateFrame name="CFrame">
-          <X>0</X>
-          <Y>0</Y>
-          <Z>0</Z>
-          <R00>1</R00>
-          <R01>0</R01>
-          <R02>0</R02>
-          <R10>0</R10>
-          <R11>1</R11>
-          <R12>0</R12>
-          <R20>0</R20>
-          <R21>0</R21>
-          <R22>1</R22>
-        </CoordinateFrame>
-        <Vector3 name="size">
-          <X>10</X>
-          <Y>1</Y>
-          <Z>10</Z>
-        </Vector3>
-      </Properties>
-    </Item>
-  </Item>
-  <Item class="Part" referent="84">
-    <Properties>
-      <string name="Name">TallRedTower</string>
-      <Color3uint8 name="Color3uint8">16711680</Color3uint8>
-      <Vector3 name="size">
-        <X>5</X>
-        <Y>50</Y>
-        <Z>5</Z>
-      </Vector3>
-    </Properties>
-  </Item>
-  <Item class="Part" referent="85">
-    <Properties>
-      <string name="Name">TallBlueTower</string>
-      <CoordinateFrame name="CFrame">
-        <X>20</X>
-        <Y>25</Y>
-        <Z>0</Z>
-        <R00>1</R00>
-        <R01>0</R01>
-        <R02>0</R02>
-        <R10>0</R10>
-        <R11>1</R11>
-        <R12>0</R12>
-        <R20>0</R20>
-        <R21>0</R21>
-        <R22>1</R22>
-      </CoordinateFrame>
-      <Vector3 name="size">
-        <X>5</X>
-        <Y>50</Y>
-        <Z>5</Z>
-      </Vector3>
-    </Properties>
   </Item>
   <SharedStrings>
     <SharedString md5="rxNJufX5oaagQE3qNtzJSQ=="></SharedString>

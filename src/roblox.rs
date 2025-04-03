@@ -36,14 +36,42 @@ pub fn parse_roblox_file(path: impl AsRef<Path>) -> Result<WeakDom, Box<dyn Erro
     Ok(place)
 }
 
+/// Parse a Roblox XML string into a WeakDom
+pub fn parse_roblox_str(xml: &str) -> Result<WeakDom, Box<dyn Error>> {
+    let place = rbx_xml::from_str_default(xml)?;
+    Ok(place)
+}
+
+/// Add instances from JSON to the Roblox place
+/// parent_id should be the Workspace reference for proper structure
 pub fn json_to_weakdom(dom: &mut WeakDom, json: &Modification, parent_id: Ref) -> Result<(), Box<dyn Error>> {
+    println!("Adding instances to Workspace...");
+    
+    // Process all top-level instances
     for instance in &json.add {
-        let instance_id = add_instance_to_weakdom(dom, instance, parent_id)?;
-        for children in &instance.children {
-            add_instance_to_weakdom(dom, children, instance_id)?;
+        // Create each top-level instance and all its children recursively
+        process_instance_with_children(dom, instance, parent_id)?;
+    }
+    
+    println!("Successfully added all instances!");
+    Ok(())
+}
+
+/// Process an instance and all its children recursively
+fn process_instance_with_children(dom: &mut WeakDom, instance: &JsonInstance, parent_id: Ref) -> Result<Ref, Box<dyn Error>> {
+    // Add the current instance
+    println!("Processing instance: {} ({})", instance.name, instance.class);
+    let instance_id = add_instance_to_weakdom(dom, instance, parent_id)?;
+    
+    // Process all children recursively
+    if !instance.children.is_empty() {
+        println!("Processing {} children for {}", instance.children.len(), instance.name);
+        for child in &instance.children {
+            process_instance_with_children(dom, child, instance_id)?;
         }
     }
-    Ok(())
+    
+    Ok(instance_id)
 }
 
 /// Add a single instance to WeakDom
@@ -52,9 +80,12 @@ pub fn add_instance_to_weakdom(
     json: &JsonInstance,
     parent_id: Ref,
 ) -> Result<Ref, Box<dyn Error>> {
+    println!("Creating instance: {} ({})", json.name, json.class);
     let mut builder = InstanceBuilder::new(&json.class).with_name(&json.name);
 
+    // Add properties to the instance builder
     for (prop_name, prop) in &json.properties {
+        println!("  - Adding property: {}", prop_name);
         let variant = match prop.type_name.as_str() {
             "Vector3" => {
                 if let Value::Array(vec) = &prop.value {
@@ -154,7 +185,11 @@ pub fn add_instance_to_weakdom(
         builder = builder.with_property(prop_name, variant);
     }
 
-    Ok(dom.insert(parent_id, builder))
+    // Insert the instance into the DOM
+    let instance_id = dom.insert(parent_id, builder);
+    println!("  Created instance with ID: {:?}", instance_id);
+    
+    Ok(instance_id)
 }
 
 /// Write a Roblox WeakDom to a file
