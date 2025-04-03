@@ -3,9 +3,8 @@ MCP for roblox studio.
 Gemini support only, kinda hardcoded 2.0 flash model.
 
 # Usage
-```
-clone and cargo run -- --file <FILE> --api-key <KEY> --prompt <PROMPT> --context <FILE>
-```
+Clone and use cargo run.
+
 Context is optional. 
 Api key can be provided as argument or via env variable.
 
