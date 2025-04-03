@@ -11,6 +11,8 @@ use std::collections::HashMap;
 #[derive(Deserialize, Serialize)]
 pub struct Modification {
     pub add: Vec<JsonInstance>,
+    #[serde(default)]
+    pub subtract: Vec<String>,  // Paths to instances that should be removed
 }
 
 #[derive(Serialize, Deserialize)]
@@ -83,6 +85,24 @@ pub fn json_to_weakdom(dom: &mut WeakDom, json: &Modification, parent_id: Ref) -
         service_refs.insert("StarterCharacterScripts".to_string(), starter_character_scripts_id);
     }
     
+    // Process all subtract operations first
+    if !json.subtract.is_empty() {
+        println!("Processing {} removal operations...", json.subtract.len());
+        for path in &json.subtract {
+            println!("Trying to remove instance at path: {}", path);
+            if let Some(instance_id) = find_instance_by_path(dom, data_model_id, path) {
+                // Remove the instance
+                if let Err(e) = remove_instance(dom, instance_id) {
+                    println!("Warning: Failed to remove instance at '{}': {}", path, e);
+                } else {
+                    println!("Successfully removed instance at path: {}", path);
+                }
+            } else {
+                println!("Warning: Could not find instance at path '{}' to remove", path);
+            }
+        }
+    }
+    
     // Process all top-level instances
     for instance in &json.add {
         // Debug output to see what's being received
@@ -121,7 +141,7 @@ pub fn json_to_weakdom(dom: &mut WeakDom, json: &Modification, parent_id: Ref) -
         process_instance_with_children(dom, instance, target_parent)?;
     }
     
-    println!("Successfully added all instances!");
+    println!("Successfully processed all operations!");
     Ok(())
 }
 
@@ -452,6 +472,21 @@ pub fn add_instance_to_weakdom(
     println!("  Created instance with ID: {:?}", instance_id);
     
     Ok(instance_id)
+}
+
+/// Remove an instance and all its children from the WeakDom
+fn remove_instance(dom: &mut WeakDom, instance_id: Ref) -> Result<(), Box<dyn Error>> {
+    // Get the instance name for logging
+    let instance_name = match dom.get_by_ref(instance_id) {
+        Some(instance) => instance.name.clone(),
+        None => return Err(format!("Instance with ref {:?} not found", instance_id).into()),
+    };
+    
+    // Remove the instance
+    dom.destroy(instance_id);
+    println!("Removed instance: {}", instance_name);
+    
+    Ok(())
 }
 
 /// Write a Roblox WeakDom to a file

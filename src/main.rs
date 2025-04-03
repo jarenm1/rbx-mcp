@@ -2,9 +2,7 @@ use std::env;
 use std::error::Error;
 use std::io::{self, BufRead, Write};
 use std::path::PathBuf;
-use std::sync::{Arc, Mutex};
 use dotenv::dotenv;
-use std::time::SystemTime;
 
 use roblox_mcp::cli::build_cli;
 use roblox_mcp::gemini_api::GeminiClient;
@@ -58,21 +56,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Create Gemini client
     let client = GeminiClient::flash(api_key);
     
-    // Track the latest output file - use the original filepath
-    let latest_output = Arc::new(Mutex::new(filepath.to_string_lossy().to_string()));
-    let last_modified = Arc::new(Mutex::new(SystemTime::now()));
-    
-    // Start HTTP server for Roblox Studio plugin communication
-    let server_output = latest_output.clone();
-    let server_modified = last_modified.clone();
-    tokio::spawn(async move {
-        start_http_server(server_output, server_modified).await;
-    });
-    
     println!("\n===== ROBLOX MCP INTERACTIVE MODE =====");
     println!("Enter prompts to modify your Roblox place. Press Ctrl+C to exit.");
-    println!("Roblox Studio plugin can connect to http://localhost:3030");
-    
+
     loop {
         // Re-parse the place at the start of each loop to get fresh data
         let mut place = match roblox::parse_roblox_file(filepath) {
@@ -130,8 +116,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
                                     continue;
                                 }
                                 
-                                // Update the modified time for HTTP server
-                                *last_modified.lock().unwrap() = SystemTime::now();
                                 println!("Updated original file: {}", filepath.display());
                             },
                             Err(e) => {
@@ -153,44 +137,4 @@ async fn main() -> Result<(), Box<dyn Error>> {
     }
 
     Ok(())
-}
-
-async fn start_http_server(
-    output_file: Arc<Mutex<String>>, 
-    last_modified: Arc<Mutex<SystemTime>>
-) {
-    // Import warp at the function level to avoid affecting main compilation
-    use warp::Filter;
-    
-    // Create a route for getting the last modified time
-    let modified_time = Arc::clone(&last_modified);
-    let last_modified_route = warp::path!("last_modified")
-        .map(move || {
-            let time = *modified_time.lock().unwrap();
-            match time.duration_since(std::time::UNIX_EPOCH) {
-                Ok(duration) => format!("{}", duration.as_secs()),
-                Err(_) => "0".to_string()
-            }
-        });
-    
-    // Create a route for getting the file content
-    let file_path = Arc::clone(&output_file);
-    let file_content_route = warp::path!("file_content")
-        .map(move || {
-            let path = file_path.lock().unwrap().clone();
-            match std::fs::read_to_string(&path) {
-                Ok(content) => content,
-                Err(e) => format!("Error reading file: {}", e)
-            }
-        });
-    
-    // Combined routes
-    let routes = last_modified_route.or(file_content_route);
-    
-    println!("Starting HTTP server on http://localhost:3030");
-    println!("Roblox plugin can use these endpoints:");
-    println!("  - GET /last_modified - Returns the timestamp of the last file update");
-    println!("  - GET /file_content - Returns the full RBXLX content");
-    
-    warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 }

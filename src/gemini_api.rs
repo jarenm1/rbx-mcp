@@ -164,6 +164,10 @@ fn example_prompt() -> String {
                 ]
             }
         ]
+        "subtract": [
+            "Workspace/House/Door",
+            "Workspace/Tree/Window"
+        ]
     }
     "#.to_string()
 }
@@ -179,6 +183,9 @@ fn documentation_prompt() -> String {
     YOU MUST START WITH THE HIGHEST LEVEL. i.e. "Workspace" or "ReplicatedStorage" AND INDEX TO TARGET. THIS IS REQUIRED!
     DO NOT SKIP THIS STEP.
     YOU MUST INDEX TO TARGET BASED ON THE PROVIDED DOM CONTEXT.
+
+    You can remove instances by providing a path to the instance you want to remove in subtract.
+    When asked to modify, or rewrite, remove the old instance when adding the new one.
     
     Valid target_parent examples:
     - "Workspace" - Top-level workspace (for physical objects, parts, models)
